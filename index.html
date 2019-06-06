@@ -16,39 +16,45 @@
 <body>
     <div class='container'>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center">
                 <img id="banner" src="assets/images/Banner.PNG" alt="banner" class="src">
             </div>
-        </div>        
-        
+        </div>          
         <div class="row">
-            <div class="col-12">
-                <p id="temp"></p>
+            <div class="col-12 text-center">
+                <h3>Time Remaining: <span id="timeRemaining"></span> seconds</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3 id="question"></h3>
             </div>
         </div>
     </div>
+
+    <!-- Answers -->
     <div class="container">    
-        <div class="form-check" id="answer1">
+        <div class="form-check text-center" id="answer1">
             <input class="form-check-input" type="radio" name="answerRadios" id="answerRadios1" value="0">
-            <label class="form-check-label" for="answerRadios1">
+            <label class="form-check-label" id="answerLabel1" for="answerRadios1">
                 Answer 1
             </label>
         </div>
-        <div class="form-check" id="answer2"> <!--class invisible hides input-->
+        <div class="form-check text-center" id="answer2"> <!--class invisible hides input-->
             <input class="form-check-input " type="radio" name="answerRadios" id="answerRadios2" value="1">
-            <label class="form-check-label" for="answerRadios2">
+            <label class="form-check-label"  id="answerLabel2"for="answerRadios2">
                 Answer 2
             </label>
         </div>
-        <div class="form-check" id="answer3">
+        <div class="form-check text-center" id="answer3">
             <input class="form-check-input" type="radio" name="answerRadios" id="answerRadios3" value="2">
-            <label class="form-check-label" for="answerRadios3">
+            <label class="form-check-label"  id="answerLabel3" for="answerRadios3">
                 Answer 3
             </label>
         </div>
         <div class="form-check" id="answer4">
             <input class="form-check-input" type="radio" name="answerRadios" id="answerRadios4" value="3">
-            <label class="form-check-label" for="answerRadios4">
+            <label class="form-check-label text-center"  id="answerLabel4" for="answerRadios4">
                 Answer 4
             </label>
         </div>

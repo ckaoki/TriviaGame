@@ -2,14 +2,18 @@
     padding-top: 10px;
 }
 
+.form-check{
+    padding-left: 0;
+}
 .form-check-label{
     font-size: 24px;
-    margin-left: 20px;
+    width: 100%;
 }
 
 input[type=radio] {
     width: 30px;
     height: 30px;
+    visibility: hidden;
 }
 
 .form-check{
@@ -18,7 +22,13 @@ input[type=radio] {
     margin-bottom: 10px;
 }
 
-.form-check:hover{
-    color:white;
+.form-check-input:hover{
+    /* color:white; */
     background-color:blue;
 }
+
+.form-check-label:hover{
+    color:white;
+    background-color:blue;   
+}
+
