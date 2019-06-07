@@ -5,58 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script
-        src="https://code.jquery.com/jquery-3.4.1.js"
-        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-        crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    
   <title>Trivia Game</title>
 </head>
 <body>
+    <!-- header container -->
     <div class='container'>
         <div class="row">
-            <div class="col-12 text-center">
-                <img id="banner" src="assets/images/Banner.PNG" alt="banner" class="src">
+            <div class="col-12 text-center" id="banner">
+                <h1>NONSENSES, TRIFLES, & TRIVIA</h1>
             </div>
         </div>          
-        <div class="row">
-            <div class="col-12 text-center">
-                <h3>Time Remaining: <span id="timeRemaining"></span> seconds</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 text-center">
-                <h3 id="question"></h3>
-            </div>
-        </div>
     </div>
+    
+    <!-- Main body container-->
+    <div class="container" id="gameContainer">  
+        <!-- start button -->
+        <div class="row text-center" id="startButtonDisplay">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary btn-md btn-block" id="startButton">Start Game</button>
+            </div>
+        </div>
+        <!-- timer -->
+        <div class="row" id="timerDisplay">
+            <div class="col-12 text-center">
+                <h3>Time Remaining: <span id="time"></span> seconds</h3>
+            </div>
+        </div>
 
-    <!-- Answers -->
-    <div class="container">    
-        <div class="form-check text-center" id="answer1">
-            <input class="form-check-input" type="radio" name="answerRadios" id="answerRadios1" value="0">
-            <label class="form-check-label" id="answerLabel1" for="answerRadios1">
-                Answer 1
-            </label>
+        <!-- question  -->
+        <div class="row" id="questionDisplay">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h3 id="question"></h3>
+                    </div>
+                </div>
+        
+                <div class="form-check text-center" id="choice1">
+                    <input class="form-check-input" type="radio" name="choiceRadios" id="choiceRadios1" value="0">
+                    <label class="form-check-label" id="choiceLabel1" for="choiceRadios1">
+                        Answer 1
+                    </label>
+                </div>
+                <div class="form-check text-center" id="choice2"> <!--class invisible hides input-->
+                    <input class="form-check-input " type="radio" name="choiceRadios" id="choiceRadios2" value="1">
+                    <label class="form-check-label"  id="choiceLabel2"for="choiceRadios2">
+                        Answer 2
+                    </label>
+                </div>
+                <div class="form-check text-center" id="choice3">
+                    <input class="form-check-input" type="radio" name="choiceRadios" id="choiceRadios3" value="2">
+                    <label class="form-check-label"  id="choiceLabel3" for="choiceRadios3">
+                        Answer 3
+                    </label>
+                </div>
+                <div class="form-check" id="choice4">
+                    <input class="form-check-input" type="radio" name="choiceRadios" id="choiceRadios4" value="3">
+                    <label class="form-check-label text-center"  id="choiceLabel4" for="choiceRadios4">
+                        Answer 4
+                    </label>
+                </div>
+            </div>
         </div>
-        <div class="form-check text-center" id="answer2"> <!--class invisible hides input-->
-            <input class="form-check-input " type="radio" name="answerRadios" id="answerRadios2" value="1">
-            <label class="form-check-label"  id="answerLabel2"for="answerRadios2">
-                Answer 2
-            </label>
+
+        <!-- answer -->
+        <div class="row text-center" id="answerDisplay">
+            <div class="col-12">
+                <h3 id="questionResult">answer</h3>
+                <h3 id="answer"></h3>
+            </div>
         </div>
-        <div class="form-check text-center" id="answer3">
-            <input class="form-check-input" type="radio" name="answerRadios" id="answerRadios3" value="2">
-            <label class="form-check-label"  id="answerLabel3" for="answerRadios3">
-                Answer 3
-            </label>
-        </div>
-        <div class="form-check" id="answer4">
-            <input class="form-check-input" type="radio" name="answerRadios" id="answerRadios4" value="3">
-            <label class="form-check-label text-center"  id="answerLabel4" for="answerRadios4">
-                Answer 4
-            </label>
+
+        <!-- game results -->
+        <div class="row" id="gameResultsDisplay">
+            <div class="col-12">
+                <h3>game results</h3>
+            </div>
         </div>
     </div>
     

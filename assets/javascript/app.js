@@ -2,32 +2,129 @@
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
-var triviaIndex = 3;
-
-var Trivia = [
-    {question:"q0", answer1:"a10", answer2:"a20", answer3:"a30", answer4:"a40"},
-    {question:"q1", answer1:"a11", answer2:"a21", answer3:"a31", answer4:"a41"},
-    {question:"q2", answer1:"a12", answer2:"a22", answer3:"a32", answer4:"a42"},
-    {question:"q3", answer1:"a13", answer2:"a23", answer3:"a33", answer4:"a43"},
-    {question:"q4", answer1:"a14", answer2:"a24", answer3:"a34", answer4:"a44"},
-    {question:"q5", answer1:"a15", answer2:"a25", answer3:"a35", answer4:"a45"},
-    {question:"q6", answer1:"a16", answer2:"a26", answer3:"a36", answer4:"a46"},
-    {question:"q7", answer1:"a17", answer2:"a27", answer3:"a37", answer4:"a47"},
-    {question:"q8", answer1:"a18", answer2:"a28", answer3:"a38", answer4:"a48"},
-    {question:"q9", answer1:"a19", answer2:"a29", answer3:"a39", answer4:"a49"},
+var triviaIndex = 0;
+var radioValue = -1;
+var questionIntervalID;
+var questionClockRunning = false;
+var quetionTime=0;
+var resultIntervalID;
+var resultClockRunning = false;
+var resultTime=0;
+var trivia = [
+    {question:"q0", choices:["a10","a20","a30","a40"], answer:"a20"},
+    {question:"q1", choices:["a11","a21","a31","a41"], answer:"2"},
+    {question:"q2", choices:["a12","a22","a32","a42"], answer:"4"},
+    {question:"q3", choices:["a13","a23","a33","a43"], answer:"3"},
+    {question:"q4", choices:["a14","a24","a34","a44"], answer:"1"},
+    {question:"q5", choices:["a15","a25","a35","a45"], answer:"4"},
+    {question:"q6", choices:["a16","a26","a36","a46"], answer:"3"},
+    {question:"q7", choices:["a17","a27","a37","a47"], answer:"3"},
+    {question:"q8", choices:["a18","a28","a38","a48"], answer:"2"},
+    {question:"q9", choices:["a19","a29","a39","a49"], answer:"2"},
 ]
 
+// start question timer 
+function startQuestionTimer(){
+    if(!questionClockRunning){
+        questionClockRunning = true;
+        questionTime = 5;
+        questionIntervalID = setInterval(function(){checkGameStatus()}, 1000);
+        $("#time").text(questionTime);
+    }
+    }
+
+// stop question timer
+function stopQuestionTimer(){
+    if(questionClockRunning){
+        clearInterval(questionIntervalID);
+        questionClockRunning = false;
+    }
+}
+// start result timer 
+function startResultTimer(){
+    if(!resultClockRunning){
+        resultClockRunning = true;
+        resultTime = 5;
+        resultIntervalID = setInterval(function(){
+            startQuestion();
+            $("#questionDisplay").show();},3000);
+        $("#time").text(resultTime);
+    }
+}
+
+// stop result timer
+function stopResultTimer(){
+    if(resultClockRunning){
+        clearInterval(resultIntervalID);
+        resultClockRunning = false;
+    }
+}
+
+// intialize and start game
 function init(){
+    triviaIndex=0;
+    $("#startButtonDisplay").hide();
+    $("#timerDisplay").show();
+    $("#questionDisplay").show();
+}
+
+function startQuestion(){
+    if(triviaIndex < trivia.length){
+        $("#question").text(trivia[triviaIndex].question);
+        $("#choiceLabel1").text(trivia[triviaIndex].choices[0]);
+        $("#choiceLabel2").text(trivia[triviaIndex].choices[1]);
+        $("#choiceLabel3").text(trivia[triviaIndex].choices[2]);
+        $("#choiceLabel4").text(trivia[triviaIndex].choices[3]);    
+        startQuestionTimer();
+        $("#timerDisplay").show();
+        triviaIndex++
+    }
+    else{
+        //TODO:  game over, show results      
+    }
+}
+
+// checks if timer is up and whether game is over.
+function checkGameStatus(){
+    questionTime--;
+
+    // check if time to answer question has expired
+    if(questionTime <= 0){
+        $("#questionDisplay").hide();
+        $("#answerDisplay").show();
+        $("#timerDisplay").hide();
+        displayQuestionResult(false, "Out of Time!");
+        stopQuestionTimer();
+        startResultTimer();
+    }
+    $("#time").text(questionTime);
 
 }
 
-function loadQA(){
-    $("#question").text(Trivia[triviaIndex].question);
-    $("#answerLabel1").text(Trivia[triviaIndex].answer1);
-    $("#answerLabel2").text(Trivia[triviaIndex].answer2);
-    $("#answerLabel3").text(Trivia[triviaIndex].answer3);
-    $("#answerLabel4").text(Trivia[triviaIndex].answer4);
-    
+function checkAnswer(radioValue){
+    $("#questionDisplay").hide();
+    $("#answerDisplay").show(); 
+    if(trivia[triviaIndex].choices[radioValue] === trivia[triviaIndex].answer){
+        displayQuestionResult(true, "Correct!");      
+    }
+    else{
+        displayQuestionResult(false, "Heck No!");        
+    }
+    stopQuestionTimer();
+    startResultTimer();
+}
+
+function displayQuestionResult(isCorrect, message){
+    if(isCorrect){
+        console.log("correct");
+        $("#questionResult").text(message);
+        $("#answer").text("");
+    }
+    else{
+        console.log("wrong");        
+        $("#questionResult").text(message);
+        $("#answer").text("The correct answer was: " + trivia[triviaIndex].answer);
+    }
 }
 
 //TODO: display start button to start game. init ();
@@ -42,15 +139,16 @@ function loadQA(){
 //TODO: "Start over?" button restarts the game. init();
 
 $(document).ready(function() {
-    console.log( "ready!" );
-    loadQA();
-    $("#timeRemaining").text("0");
+
     $("input[type='radio']").click(function(){
-        var radioValue = $("input[name='answerRadios']:checked").val();
-        if(radioValue){
-            alert("Your are a - " + radioValue);
-        }
+        radioValue = $("input[name='choiceRadios']:checked").val();
+        console.log("Your are a - " + radioValue);
+        checkAnswer(radioValue);        
     });
-    //  $("#answer4").attr("class", "form-check visible");
-    //  $("#temp").text(Trivia[1].question);
+
+    $("#startButton").click(function(){
+        init();
+        startQuestion();
+    });
+    
 });

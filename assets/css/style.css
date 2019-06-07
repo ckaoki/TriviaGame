@@ -1,11 +1,61 @@
 #banner{
     padding-top: 10px;
+    background: lightblue;
+}
+
+h1{
+    font-family: 'ZCOOL KuaiLe', cursive, arial;
+} 
+
+#gameContainer{
+    background: #96f2ed;
+    min-height: 70vh;
+}
+
+#startButtonDisplay{
+    height:200px;
+    padding-top: 100px;
+}
+
+#startButtonDisplay div{
+    padding: 20px;
+}
+
+#timerDisplay{
+    display: none;   
+    padding: 20px; 
+}
+
+#questionDisplay{
+    display: none;
+    padding-top: 0;
+}
+
+#question{
+    padding: 20px;
+    padding-top: 0;
+}
+
+#answerDisplay{
+    display: none;
+    padding-top: 0;
+}
+
+#gameResultsDisplay{
+    display: none;
+    padding-top: 0;
+}
+
+#startButton{
+    font-size: 36px;
 }
 
 .form-check{
     padding-left: 0;
 }
+
 .form-check-label{
+    padding-left: 0;
     font-size: 24px;
     width: 100%;
 }
@@ -31,4 +81,6 @@ input[type=radio] {
     color:white;
     background-color:blue;   
 }
+
+
 
