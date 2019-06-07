@@ -29,8 +29,8 @@ function startQuestionTimer(){
         questionClockRunning = true;
         questionTime = 5;
         questionIntervalID = setInterval(function(){checkGameStatus()}, 1000);
-        $("#time").text(questionTime);
     }
+    $("#time").text(questionTime);
     }
 
 // stop question timer
@@ -40,13 +40,15 @@ function stopQuestionTimer(){
         questionClockRunning = false;
     }
 }
+
 // start result timer 
 function startResultTimer(){
     if(!resultClockRunning){
         resultClockRunning = true;
-        resultTime = 5;
+        resultTime = 3;
         resultIntervalID = setInterval(function(){
             startQuestion();
+            stopResultTimer();
             $("#questionDisplay").show();},3000);
         $("#time").text(resultTime);
     }
@@ -64,7 +66,6 @@ function stopResultTimer(){
 function init(){
     triviaIndex=0;
     $("#startButtonDisplay").hide();
-    $("#timerDisplay").show();
     $("#questionDisplay").show();
 }
 
@@ -76,12 +77,12 @@ function startQuestion(){
         $("#choiceLabel3").text(trivia[triviaIndex].choices[2]);
         $("#choiceLabel4").text(trivia[triviaIndex].choices[3]);    
         startQuestionTimer();
-        $("#timerDisplay").show();
-        triviaIndex++
+        $("#timeDisplay").show();
+
+        console.log("wtf");
     }
-    else{
-        //TODO:  game over, show results      
-    }
+
+
 }
 
 // checks if timer is up and whether game is over.
@@ -92,11 +93,13 @@ function checkGameStatus(){
     if(questionTime <= 0){
         $("#questionDisplay").hide();
         $("#answerDisplay").show();
-        $("#timerDisplay").hide();
+        $("#timeDisplay").hide();
         displayQuestionResult(false, "Out of Time!");
         stopQuestionTimer();
         startResultTimer();
+        triviaIndex++;
     }
+
     $("#time").text(questionTime);
 
 }
@@ -104,6 +107,7 @@ function checkGameStatus(){
 function checkAnswer(radioValue){
     $("#questionDisplay").hide();
     $("#answerDisplay").show(); 
+    $("#timeDisplay").hide();
     if(trivia[triviaIndex].choices[radioValue] === trivia[triviaIndex].answer){
         displayQuestionResult(true, "Correct!");      
     }
@@ -112,7 +116,9 @@ function checkAnswer(radioValue){
     }
     stopQuestionTimer();
     startResultTimer();
+    triviaIndex++;
 }
+
 
 function displayQuestionResult(isCorrect, message){
     if(isCorrect){
