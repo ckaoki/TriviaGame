@@ -46,8 +46,16 @@ h1{
     padding-top: 0;
 }
 
-#startButton{
+#startButton, #reStartButton{
     font-size: 36px;
+}
+
+#gameResultsDisplay{
+    padding-top: 20px;
+}
+
+#gameStats{
+    padding-bottom: 20px;
 }
 
 .form-check{

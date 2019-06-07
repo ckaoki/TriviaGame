@@ -6,7 +6,7 @@ var triviaIndex = 0;
 var radioValue = -1;
 var questionIntervalID;
 var questionClockRunning = false;
-var quetionTime=0;
+var questionTime=0;
 var resultIntervalID;
 var resultClockRunning = false;
 var resultTime=0;
@@ -47,10 +47,21 @@ function startResultTimer(){
         resultClockRunning = true;
         resultTime = 3;
         resultIntervalID = setInterval(function(){
-            startQuestion();
             stopResultTimer();
-            $("#questionDisplay").show();},3000);
-        $("#time").text(resultTime);
+            triviaIndex++;
+            // keep going until all questions posed.
+            if(triviaIndex < trivia.length){
+                $("#questionDisplay").show();
+                $("#time").text(resultTime);
+                startQuestion();
+            }
+            else{
+                $("#answerDisplay").hide();
+                $("#gameResultsDisplay").show();
+            }
+            ;}            
+            ,resultTime);
+
     }
 }
 
@@ -65,24 +76,23 @@ function stopResultTimer(){
 // intialize and start game
 function init(){
     triviaIndex=0;
+    correct=0;
+    incorrect=0;
     $("#startButtonDisplay").hide();
+    $("#gameResultsDisplay").hide();
     $("#questionDisplay").show();
+    startQuestion();
 }
 
+// load new question and start timer
 function startQuestion(){
-    if(triviaIndex < trivia.length){
-        $("#question").text(trivia[triviaIndex].question);
-        $("#choiceLabel1").text(trivia[triviaIndex].choices[0]);
-        $("#choiceLabel2").text(trivia[triviaIndex].choices[1]);
-        $("#choiceLabel3").text(trivia[triviaIndex].choices[2]);
-        $("#choiceLabel4").text(trivia[triviaIndex].choices[3]);    
-        startQuestionTimer();
-        $("#timeDisplay").show();
-
-        console.log("wtf");
-    }
-
-
+    $("#question").text(trivia[triviaIndex].question);
+    $("#choiceLabel1").text(trivia[triviaIndex].choices[0]);
+    $("#choiceLabel2").text(trivia[triviaIndex].choices[1]);
+    $("#choiceLabel3").text(trivia[triviaIndex].choices[2]);
+    $("#choiceLabel4").text(trivia[triviaIndex].choices[3]);    
+    startQuestionTimer();
+    $("#timeDisplay").show();
 }
 
 // checks if timer is up and whether game is over.
@@ -97,29 +107,32 @@ function checkGameStatus(){
         displayQuestionResult(false, "Out of Time!");
         stopQuestionTimer();
         startResultTimer();
-        triviaIndex++;
+        incorrect++;
     }
 
     $("#time").text(questionTime);
 
 }
 
+
+// check whether answer was correct
 function checkAnswer(radioValue){
     $("#questionDisplay").hide();
     $("#answerDisplay").show(); 
     $("#timeDisplay").hide();
     if(trivia[triviaIndex].choices[radioValue] === trivia[triviaIndex].answer){
-        displayQuestionResult(true, "Correct!");      
+        displayQuestionResult(true, "Correct!");
+        correct++;      
     }
     else{
-        displayQuestionResult(false, "Heck No!");        
+        displayQuestionResult(false, "Heck No!"); 
+        correct--;       
     }
     stopQuestionTimer();
     startResultTimer();
-    triviaIndex++;
 }
 
-
+// display whether answer was correct. If incorrect display answer.
 function displayQuestionResult(isCorrect, message){
     if(isCorrect){
         console.log("correct");
@@ -146,15 +159,21 @@ function displayQuestionResult(isCorrect, message){
 
 $(document).ready(function() {
 
+    // player choose an answer
     $("input[type='radio']").click(function(){
         radioValue = $("input[name='choiceRadios']:checked").val();
         console.log("Your are a - " + radioValue);
         checkAnswer(radioValue);        
     });
 
+    // start game
     $("#startButton").click(function(){
         init();
-        startQuestion();
+    });
+
+    // restart game
+    $("#reStartButton").click(function(){
+        init();
     });
     
 });
