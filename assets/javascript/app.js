@@ -1,4 +1,3 @@
-//TODO: variables: correct, incorrect, unanswered
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
@@ -13,10 +12,10 @@ var resultTime=0;
 var trivia = [
     {question:"What 80s TV show had character BA Baracus?", choices:["The Golden Girls","Family Ties","A Team","Cheers"], answer:"A Team", img:"ATeam.jpg"},
     {question:"What 80s TV show made blazers with t-shirts cool?", choices:["MASH","The Cosby Show","Hill Street Blues","Miami Vice"], answer:"Miami Vice", img:"MiamiVice.jpg"},
-    {question:"What 80s TV show had a main charactor who was also James Bond?", choices:["Remington Steele","Cheers","Who's the Boss?","Cagney and Lacey"], answer:"Remington Steele", img:"ATeam.jpg"},
+    {question:"What 80s TV show had a main charactor who was also James Bond?", choices:["Remington Steele","Cheers","Who's the Boss?","Cagney and Lacey"], answer:"Remington Steele", img:"RemingtonSteele.jpg"},
     {question:"What 80s TV show was based in Hawaii?", choices:["Moonlighting","Perfect Strangers","MASH","Magnum PI"], answer:"Magnum PI", img:"MagnumPI.jpg"},
     {question:"What 80s TV show had a talking car?", choices:["A Team","The Golden Girls","Knight Rider","The Wonder Years"], answer:"Knight Rider", img:"KnightRider.jpg"},
-    {question:"What 80s TV show starred and alien?", choices:["The Cosby Show","ALF","Cheers","Growing Pains"], answer:"ALF", img:"ALF.jpg"},
+    {question:"What 80s TV show starred an alien?", choices:["The Cosby Show","ALF","Cheers","Growing Pains"], answer:"ALF", img:"ALF.jpg"},
     {question:"What 80s TV show starred Balki Bartokomous?", choices:["Knight Rider","A Team","Who's the Boss?","Perfect Strangers"], answer:"Perfect Strangers", img:"PerfectStrangers.jpg"},
     {question:"What 80s TV show was about girls at a boarding school?", choices:["Family Ties","The Facts of Life","Growing Pains","Cheers"], answer:"The Facts of Life", img:"TheFactsOfLife.jpg"},
     {question:"What 80s TV show had a character who said 'what you talkin bout willis?'", choices:["Different Strokes","The Cosby Show","A Team","Miami Vice"], answer:"Different Strokes", img:"DifferentStrokes.jpg"},
@@ -110,7 +109,6 @@ function checkGameStatus(){
     }
 
     $("#time").text(questionTime);
-
 }
 
 
@@ -141,11 +139,12 @@ function displayQuestionResult(isCorrect, message){
     else{
         console.log("wrong");        
         $("#questionResult").text(message);
-        $("#answer").text("The correct answer was: " + trivia[triviaIndex].answer);
+        $("#answer").text("The correct answer is: " + trivia[triviaIndex].answer);
     }
     $("#answerImage").attr("src", "assets/images/" + trivia[triviaIndex].img);
 }
 
+// display number of correct, incorrect, unanswered.
 function displayGameResults(){
     $("#gameResultsDisplay").show();
     var p1 = $("<p>").css("font-size", "24px");
@@ -160,20 +159,10 @@ function displayGameResults(){
     $("#gameStats").append(p3);
 }
 
-//TODO: display start button to start game. init ();
-//TODO: when start button pressed reset variables.
-//TODO: load first question. question has mutually exclusive answers
-//TODO: start timer. Possibly display spinner.
-//TODO: if answered within time show whether correct of not.
-//TODO: if answer correct display correct answer, "Correct!", and increment correct variable
-//TODO: if answer incorrect display correct answer, "Incorrect" and increment incorrect variable.
-//TODO: if no answer within time show correct answer and "Out of time!"
-//TODO: after last question display correct, incorrect, and unanswered. with "Start Over?" button
-//TODO: "Start over?" button restarts the game. init();
-
+// Document is ready. Monitor user input.
 $(document).ready(function() {
 
-    // player choose an answer
+    // player chose an answer
     $("input[type='radio']").click(function(){
         radioValue = $("input[name='choiceRadios']:checked").val();
         console.log("Your are a - " + radioValue);
