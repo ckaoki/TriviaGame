@@ -31,6 +31,10 @@ h1{
     padding-top: 0;
 }
 
+#questionResult{
+    padding-top: 50px;
+}
+
 #question{
     padding: 20px;
     padding-top: 0;
@@ -41,13 +45,23 @@ h1{
     padding-top: 0;
 }
 
+#answerImage{
+    max-height: 300px;
+    max-width: 300px;
+}
+
 #gameResultsDisplay{
     display: none;
-    padding-top: 0;
+    padding: 20px;
+}
+
+#gameResultsDisplay h3{
+    padding-bottom: 20px;
 }
 
 #startButton, #reStartButton{
     font-size: 36px;
+    width: 80%;
 }
 
 #gameResultsDisplay{

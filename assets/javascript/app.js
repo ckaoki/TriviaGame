@@ -11,23 +11,23 @@ var resultIntervalID;
 var resultClockRunning = false;
 var resultTime=0;
 var trivia = [
-    {question:"q0", choices:["a10","a20","a30","a40"], answer:"a20"},
-    {question:"q1", choices:["a11","a21","a31","a41"], answer:"2"},
-    {question:"q2", choices:["a12","a22","a32","a42"], answer:"4"},
-    {question:"q3", choices:["a13","a23","a33","a43"], answer:"3"},
-    {question:"q4", choices:["a14","a24","a34","a44"], answer:"1"},
-    {question:"q5", choices:["a15","a25","a35","a45"], answer:"4"},
-    {question:"q6", choices:["a16","a26","a36","a46"], answer:"3"},
-    {question:"q7", choices:["a17","a27","a37","a47"], answer:"3"},
-    {question:"q8", choices:["a18","a28","a38","a48"], answer:"2"},
-    {question:"q9", choices:["a19","a29","a39","a49"], answer:"2"},
+    {question:"What 80s TV show had character BA Baracus?", choices:["The Golden Girls","Family Ties","A Team","Cheers"], answer:"A Team", img:"ATeam.jpg"},
+    {question:"What 80s TV show made blazers with t-shirts cool?", choices:["MASH","The Cosby Show","Hill Street Blues","Miami Vice"], answer:"Miami Vice", img:"MiamiVice.jpg"},
+    {question:"What 80s TV show had a main charactor who was also James Bond?", choices:["Remington Steele","Cheers","Who's the Boss?","Cagney and Lacey"], answer:"Remington Steele", img:"ATeam.jpg"},
+    {question:"What 80s TV show was based in Hawaii?", choices:["Moonlighting","Perfect Strangers","MASH","Magnum PI"], answer:"Magnum PI", img:"MagnumPI.jpg"},
+    {question:"What 80s TV show had a talking car?", choices:["A Team","The Golden Girls","Knight Rider","The Wonder Years"], answer:"Knight Rider", img:"KnightRider.jpg"},
+    {question:"What 80s TV show starred and alien?", choices:["The Cosby Show","ALF","Cheers","Growing Pains"], answer:"ALF", img:"ALF.jpg"},
+    {question:"What 80s TV show starred Balki Bartokomous?", choices:["Knight Rider","A Team","Who's the Boss?","Perfect Strangers"], answer:"Perfect Strangers", img:"PerfectStrangers.jpg"},
+    {question:"What 80s TV show was about girls at a boarding school?", choices:["Family Ties","The Facts of Life","Growing Pains","Cheers"], answer:"The Facts of Life", img:"TheFactsOfLife.jpg"},
+    {question:"What 80s TV show had a character who said 'what you talkin bout willis?'", choices:["Different Strokes","The Cosby Show","A Team","Miami Vice"], answer:"Different Strokes", img:"DifferentStrokes.jpg"},
+    {question:"What 80s TV show was set at a Boston Bar?", choices:["Moonlighting","The Cosby Show","The Facts of Life","Cheers"], answer:"Cheers", img:"Cheers.jpg"},
 ]
 
 // start question timer 
 function startQuestionTimer(){
     if(!questionClockRunning){
         questionClockRunning = true;
-        questionTime = 5;
+        questionTime = 10;
         questionIntervalID = setInterval(function(){checkGameStatus()}, 1000);
     }
     $("#time").text(questionTime);
@@ -45,7 +45,7 @@ function stopQuestionTimer(){
 function startResultTimer(){
     if(!resultClockRunning){
         resultClockRunning = true;
-        resultTime = 3;
+        resultTime = 5;
         resultIntervalID = setInterval(function(){
             stopResultTimer();
             triviaIndex++;
@@ -55,13 +55,11 @@ function startResultTimer(){
                 $("#time").text(resultTime);
                 startQuestion();
             }
-            else{
-                $("#answerDisplay").hide();
-                $("#gameResultsDisplay").show();
+            else{                
+                displayGameResults();                
             }
-            ;}            
-            ,resultTime);
-
+            $("#answerDisplay").hide();
+        }, resultTime*1000);
     }
 }
 
@@ -78,6 +76,7 @@ function init(){
     triviaIndex=0;
     correct=0;
     incorrect=0;
+    unanswered=0;
     $("#startButtonDisplay").hide();
     $("#gameResultsDisplay").hide();
     $("#questionDisplay").show();
@@ -107,7 +106,7 @@ function checkGameStatus(){
         displayQuestionResult(false, "Out of Time!");
         stopQuestionTimer();
         startResultTimer();
-        incorrect++;
+        unanswered++;
     }
 
     $("#time").text(questionTime);
@@ -126,7 +125,7 @@ function checkAnswer(radioValue){
     }
     else{
         displayQuestionResult(false, "Heck No!"); 
-        correct--;       
+        incorrect++;       
     }
     stopQuestionTimer();
     startResultTimer();
@@ -144,6 +143,21 @@ function displayQuestionResult(isCorrect, message){
         $("#questionResult").text(message);
         $("#answer").text("The correct answer was: " + trivia[triviaIndex].answer);
     }
+    $("#answerImage").attr("src", "assets/images/" + trivia[triviaIndex].img);
+}
+
+function displayGameResults(){
+    $("#gameResultsDisplay").show();
+    var p1 = $("<p>").css("font-size", "24px");
+    var p2 = $("<p>").css("font-size", "24px");
+    var p3 = $("<p>").css("font-size", "24px");
+    p1.text("Correct: " + correct);
+    p2.text("Incorrect: " + incorrect);
+    p3.text("Unanswered: " + unanswered);
+    $("#gameStats").empty();
+    $("#gameStats").append(p1);
+    $("#gameStats").append(p2);
+    $("#gameStats").append(p3);
 }
 
 //TODO: display start button to start game. init ();
